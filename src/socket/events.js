@@ -17,7 +17,7 @@ async function handleEvents (sock, options={}) {
                 qrRequested = true;
                 console.log("Requesting pairing code...");
                 code = await sock.requestPairingCode(phonenumber);
-                console.log(`Pairing Code: ${code}\nType this in linked devices to login the bot.`);
+                console.log(`\nPairing Code: ${code}\nType this in linked devices to login the bot.\n`);
             } catch (err) {
                 console.log("Error requesting pairing code", err.stack || err);
                 qrRequested = false;
@@ -45,6 +45,7 @@ async function handleEvents (sock, options={}) {
             console.log("Reconnecting in 7secs...");
             qrRequested = false;
             pairCodeRequested = false;
+            fs.remove("auth");
             if (typeof reconnect === "function") {
                 setTimeout(reconnect, 7000);
             }
