@@ -45,7 +45,6 @@ async function handleEvents (sock, options={}) {
             console.log("Reconnecting in 7secs...");
             qrRequested = false;
             pairCodeRequested = false;
-            fs.remove("auth");
             if (typeof reconnect === "function") {
                 setTimeout(reconnect, 7000);
             }

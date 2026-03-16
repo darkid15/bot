@@ -1,7 +1,7 @@
 // config/index.js
 
-const masterNumber = "2348029972037";
-const ownerNumber = "2349167067495";
+const masterNumber = process.env.MASTER_PHONE;
+const ownerNumber = process.env.OWNER_PHONE;
 const bottomBar= '╰━━━━━━━━━━━━━━━━╯';
 
 const allowedNumbers = [masterNumber, ownerNumber];

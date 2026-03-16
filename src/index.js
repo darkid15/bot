@@ -14,7 +14,7 @@ app.listen(PORT);
 async function startBot () {
     const sock = await createSock();
     await handleEvents(sock, {
-        pairCodeLogin: true,
+        pairCodeLogin: false,
         phoneNumber: process.env.PHONE,
         reconnect: startBot
     });
