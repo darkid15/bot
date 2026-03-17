@@ -55,6 +55,7 @@ async function handleEvents (sock, options={}) {
         if (type !== "notify") return;
         for (const m of messages) {
             if (!m) continue;
+            console.log("Handling incoming message...");
             await handleMessage(sock, m); 
         };
     });

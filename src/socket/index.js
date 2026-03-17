@@ -20,7 +20,6 @@ async function createSock () {
         version,
         auth: state,
         logger: pino({level: "silent"}),
-        // browser: Browsers.macOS("Google Chrome"),
         browser: ["Nano-MD", "Chrome", "1.0"],
         printQRInTerminal: false,
         markOnlineOnConnect: true
