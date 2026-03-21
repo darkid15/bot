@@ -52,3 +52,5 @@ async function createSock(mode) {
 
     return sock;
 }
+
+module.exports = { createSock };
