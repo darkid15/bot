@@ -37,6 +37,10 @@ class DBManager {
         key TEXT PRIMARY KEY,
         value TEXT
       );
+      CREATE TABLE IF NOT EXISTS session (
+        id INTEGER PRIMARY KEY,
+        data TEXT
+      );
     `);
 
     console.log('Database initialized!');
