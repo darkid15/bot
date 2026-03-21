@@ -1,0 +1,4 @@
+{
+  "watch": ["src/commands/"],
+  "ignore": ["auth/*", "*.sqlite*", "data/*"]
+}

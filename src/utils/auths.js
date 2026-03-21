@@ -77,8 +77,14 @@ function checkAuth(m) {
     };
 }
 
+function isGroup (jid) {
+  if (!jid.endsWith("@g.us")) return false;
+  return true;
+}
+
 module.exports = {
     getUserId,
     getUserRole,
-    checkAuth
+    checkAuth,
+    isGroup
 };

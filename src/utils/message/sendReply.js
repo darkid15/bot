@@ -19,19 +19,12 @@ async function sendReply(sock, msg, content, options = {}) {
 
     const jid = msg.key.remoteJid;
 
-    /*
-     * If content is just a string
-     * convert it to text message
-     */
-
+    // If content is just a string convert it to text message
     if (typeof content === "string") {
         content = { text: content };
     }
 
-    /*
-     * Handle local file paths automatically
-     */
-
+    // Handle local file paths automatically
     if (content.image && typeof content.image === "string") {
         content.image = fs.readFileSync(content.image);
     }
@@ -52,10 +45,7 @@ async function sendReply(sock, msg, content, options = {}) {
         content.sticker = fs.readFileSync(content.sticker);
     }
 
-    /*
-     * Send message
-     */
-
+    // Send message
     return await sock.sendMessage(
         jid,
         content,

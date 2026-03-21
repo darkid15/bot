@@ -9,22 +9,22 @@ const {
 }= require("../../config/index.js");
 const { utilsDir } = require("../../config/paths.js");
 
-const { loadCommands } = require(`${utilsDir}/commandsLoader`);
-const sendReply = require(`${utilsDir}/sendReply.js`);
+const {enqueueReply} = require(`${utilsDir}/message/replyQueue.js`);
+const path = require("path");
 
-async function run({ sock, m, prefix }) {
-    const commands = [...loadCommands().values()];
-
+async function run({ sock, m, commands }) {
     // group by category
     const groups = {};
-    for (const c of commands) {
+    for (const c of commands.values()) {
         if (c.hidden) continue;
         if (!groups[c.category]) groups[c.category] = [];
         groups[c.category].push(c);
     }
     
-    let menuText = `${botAlias}
-╭━༆  \`BOT MENU\`  ༆━╮
+    let menuText = `
+       ╭━༆ ${botAlias} ༆━╮
+    
+╭━༆  \`SUPER GENE BOT MENU\`  ༆━╮
 ┃  Prefix: ${prefix}
 ┃----------------------------
 `;
@@ -41,12 +41,15 @@ async function run({ sock, m, prefix }) {
 Thank you for using ${botName}!
 
 *Bot Version*: *${botVersion}*
-`;
+
+> Powered by Darkid Bots`;
     const cooldown = {
-        min: 5000,
-        max: 9000
+        min: 500,
+        max: 600
     }
-    await sendReply(sock, m, menuText);
+    const menuBanner = path.join(__dirname, "..", "media/menuBanner.jpg");
+    
+    await enqueueReply(sock, m, { image: menuBanner, caption: menuText });
 }
 
 module.exports = {
@@ -54,6 +57,7 @@ module.exports = {
   description: "Shows a menu of all available commands.",
   category: "system",
   usage: `${prefix}menu`,
+  cooldown,
   run,
 };
 

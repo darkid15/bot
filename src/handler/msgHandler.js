@@ -2,11 +2,10 @@
 
 const { getContentType } = require("baileys");
 const { allowedNumbers, prefix } = require("../../config/index.js");
-const sendReply = require("../utils/sendReply.js");
 const { loadCommands } = require("../utils/commandsLoader.js");
 const { checkAuth } = require("../utils/auths.js");
 
-const commands = loadCommands();
+const { commands, aliases } = loadCommands();
 
 async function handleMessage (sock, m) {
     try {
@@ -40,7 +39,7 @@ async function handleMessage (sock, m) {
         
         const [cmdName, ...args] = withoutPrefix.split(/\s+/);
         
-        const cmd = commands.get(cmdName);
+        const cmd = commands.get(cmdName) || aliases.get(cmdName);
         
         if (!cmd) return;
         
@@ -48,7 +47,9 @@ async function handleMessage (sock, m) {
             sock, 
             m,
             prefix,
-            args
+            args,
+            commands,
+            aliases
         });
         
     } catch (err) {
