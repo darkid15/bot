@@ -31,7 +31,7 @@ async function createSock(mode) {
         version,
         auth: state,
         logger: pino({ level: "silent" }),
-        browser: ["Nano-MD", "Chrome", "1.0"],
+        browser: ["Nano-MD-Prod", "Chrome", "1.0"],
         printQRInTerminal: false,
         markOnlineOnConnect: true
     });
