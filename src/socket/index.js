@@ -8,7 +8,7 @@ const {
     Browsers
 } = require("baileys");
 const pino = require("pino");
-const { saveSessionToDB, loadSessionFromDB } = require("../utils/sessionDB");
+const { saveSessionToDB, loadSessionFromDB } = require("../utils/sessionsDB");
 
 async function createSock(mode) {
     console.log("Starting bot...");
