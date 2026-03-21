@@ -9,10 +9,13 @@ const {
 } = require("baileys");
 const pino = require("pino");
 
-async function createSock () {
+async function createSock (mode) {
     console.log("Starting bot...");
-    await fs.ensureDir("auth");
-    const { state, saveCreds } = await useMultiFileAuthState("auth");
+    let auth = "auth";
+    if (mode === "prod") auth = "/data/auth";
+    
+    await fs.ensureDir(auth);
+    const { state, saveCreds } = await useMultiFileAuthState(auth);
     const { version } = await fetchLatestBaileysVersion();
     console.log("Running baileys version:", version);
     

@@ -2,7 +2,7 @@ const qrcode = require("qrcode-terminal");
 const handleMessage = require("../handler/msgHandler.js");
 
 async function handleEvents (sock, options={}) {
-    const { pairCodeLogin, phonenumber, reconnect } = options;
+    const { pairCodeLogin, phoneNumber, reconnect, mode } = options;
     let qrRequested = false;
     let pairCodeRequested = false;
     
@@ -16,7 +16,7 @@ async function handleEvents (sock, options={}) {
                 pairCodeRequested = true;
                 qrRequested = true;
                 console.log("Requesting pairing code...");
-                code = await sock.requestPairingCode(phonenumber);
+                code = await sock.requestPairingCode(phoneNumber);
                 console.log(`\nPairing Code: ${code}\nType this in linked devices to login the bot.\n`);
             } catch (err) {
                 console.log("Error requesting pairing code", err.stack || err);
@@ -25,9 +25,17 @@ async function handleEvents (sock, options={}) {
         }
         
         if (qr && !qrRequested) {
-            qrRequested = true;
-            console.log("Scan this qr to connect the bot:");
-            qrcode.generate(qr, { small: true });
+            if (mode === "dev") {
+                qrRequested = true;
+                console.log("Scan this qr to connect the bot:");
+                qrcode.generate(qr, { small: true });
+            } else if (mode === "prod") {
+                   const qrLink = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`;
+                   
+                   console.log("\n=== Scan QR here ===");
+                   console.log(qrLink);
+                   console.log("\n====================");
+            }
         };
         
         if (connection === "connecting") console.log("Connecting...");
